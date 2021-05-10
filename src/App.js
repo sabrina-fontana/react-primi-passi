@@ -1,11 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
 import React, {Component} from 'react';
+import Clock from './clock';
 
 let title = <h2>Primi passi con React</h2>
-function getDate() {
-  return new Date().toLocaleDateString('it-IT') + ' ' + new Date().toLocaleTimeString('it-IT');
-}
 
 class App extends Component {
   render() {
@@ -15,7 +13,9 @@ class App extends Component {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           {title}
-          <p>Oggi è il {getDate()}</p>
+          <Clock timezone="-4"/>
+          <Clock timezone="0"/>
+          <Clock timezone="2"/>
         </header>
       </div>
     );
