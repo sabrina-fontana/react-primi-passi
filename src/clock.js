@@ -36,7 +36,7 @@ class Clock extends React.Component {
     }
     
     startClock = () => {
-        this.interval = setInterval(this.tik, 1000);
+        this.interval = setInterval(this.tik, this.props.seconds*1000);
     }
 
     stopClock = () => {
