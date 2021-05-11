@@ -14,7 +14,8 @@ class Clock extends React.Component {
         // oggetto stato inizializzato nel costruttore
         // Ogni volta che si modifica una proprietà viene chiamato il metodo render
         this.state = {
-            date: new Date()
+            date: new Date(),
+            stopped: false
         }
     }
 
@@ -22,19 +23,39 @@ class Clock extends React.Component {
         // n ore * n secondi * n millisecondi
         let time = this.state.date.getTime() + this.props.timezone*3600*1000;
         let date = new Date(time);
-        return <p>Timezone {this.props.timezone}: {date.toLocaleDateString('it-IT')} {date.toLocaleTimeString('it-IT')}</p>;
+        return <div>
+            Timezone {this.props.timezone}: {date.toLocaleDateString('it-IT')} {date.toLocaleTimeString('it-IT')}
+            <button onClick={this.toggleClock}>{this.state.stopped ? 'Start' : 'Stop'}</button>
+        </div>;
     }
-
-    tik = () => this.setState({ 
-        date: new Date() 
-    });
-
-    componentDidMount() {
+    
+    tik = () => {
+        this.setState({ 
+            date: new Date() 
+        });
+    }
+    
+    startClock = () => {
         this.interval = setInterval(this.tik, 1000);
     }
 
-    componentWillUnmount() {
+    stopClock = () => {
         clearInterval(this.interval);
+    }
+
+    toggleClock = () => {
+        this.state.stopped ? this.startClock() : this.stopClock();
+        this.setState({
+            stopped: !this.state.stopped
+        });
+    }
+
+    componentDidMount() {
+        this.startClock();
+    }
+
+    componentWillUnmount() {
+        this.stopClock();
     }
 }
 
